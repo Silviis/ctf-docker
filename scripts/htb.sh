@@ -87,8 +87,8 @@ create_machine_dir
 echo "[✓] Setup complete for $HTB_MACHINE_NAME ($HTB_MACHINE_IP)"
 
 
-alias openvpn-lab="sudo -b openvpn /workspaces/ctf-vscode-container/htb/ovpn/lab_SilviS.ovpn"
-alias openvpn-competitive="sudo -b openvpn /workspaces/ctf-vscode-container/htb/ovpn/competitive_SilviS.ovpn"
+alias openvpn-lab="sudo -b openvpn /workspaces/ctf-vscode-container/htb/ovpn/lab.ovpn"
+alias openvpn-competitive="sudo -b openvpn /workspaces/ctf-vscode-container/htb/ovpn/competitive.ovpn"
 alias htb-nmap="nmap -sC -sV $TARGET_HOSTNAME -oN /workspaces/ctf-vscode-container/htb/machines/$TARGET_HOSTNAME/initial.nmap -p- --min-rate 5000"
 alias revshell="rlwrap nc -lvp 40169"
 alias ffuf-subdomains="ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt -H 'Host: FUZZ.\$TARGET_HOSTNAME_HTB' -u http://\$TARGET_HOSTNAME_HTB -ac -o /workspaces/ctf-vscode-container/htb/machines/\$TARGET_HOSTNAME/ffuf_subdomain.txt"
