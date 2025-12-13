@@ -3,14 +3,20 @@ ENV USERNAME=kali
 ARG ZSH_THEME=htb
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update
-RUN apt install -y kali-linux-everything \
-        kali-tools-crypto-stego
+RUN apt install -y \
+        kali-linux-headless kali-tools-crypto-stego kali-tools-fuzzing \
+        kali-tools-web kali-tools-passwords kali-tools-reverse-engineering \
+        kali-tools-exploitation kali-tools-post-exploitation
 
-# Additional tools
+# Extra tools
+RUN apt install -y\
+        burpsuite
+
+# System & python packages
 RUN apt install -y \
         iputils-ping sudo dialog nano git zsh curl rlwrap \
         python3-pip python3-requests python3-zbar python3-pillow\
-        python3-unicorn python3-opencv
+        python3-unicorn python3-opencv python3-venv jq
 
 RUN gunzip /usr/share/wordlists/rockyou.txt.gz
 
@@ -30,4 +36,4 @@ USER $USERNAME
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 RUN sed -i "s!robbyrussell!${ZSH_THEME}!g" /home/$USERNAME/.zshrc  # Replace default theme
 RUN sudo chsh -s /bin/zsh $USERNAME
-RUN echo 'if [ -f /workspaces/ctf-vscode-container/scripts/target.sh ]; then source /workspaces/ctf-vscode-container/scripts/target.sh; fi' >> ~/.zshrc
+RUN echo 'if [ -f /workspaces/ctf-vscode-container/scripts/htb.sh ]; then source /workspaces/ctf-vscode-container/scripts/htb.sh; fi' >> ~/.zshrc
