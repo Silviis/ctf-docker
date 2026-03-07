@@ -87,9 +87,9 @@ create_machine_dir
 echo "[✓] Setup complete for $HTB_MACHINE_NAME ($HTB_MACHINE_IP)"
 
 
-alias openvpn-lab="sudo -b openvpn /workspaces/ctf-vscode-container/htb/ovpn/lab.ovpn"
+alias openvpn-lab="sudo -b openvpn /workspaces/ctf-vscode-container/htb/ovpn/machines_eu-4.ovpn"
 alias openvpn-competitive="sudo -b openvpn /workspaces/ctf-vscode-container/htb/ovpn/competitive.ovpn"
 alias htb-nmap="nmap -sC -sV $TARGET_HOSTNAME -oN /workspaces/ctf-vscode-container/htb/machines/$TARGET_HOSTNAME/initial.nmap -p- --min-rate 5000"
 alias revshell="rlwrap nc -lvp 40169"
 alias ffuf-subdomains="ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt -H 'Host: FUZZ.\$TARGET_HOSTNAME_HTB' -u http://\$TARGET_HOSTNAME_HTB -ac -o /workspaces/ctf-vscode-container/htb/machines/\$TARGET_HOSTNAME/ffuf_subdomain.txt"
-alias ffuf-directories="ffuf -u http://\$TARGET_HOSTNAME_HTB/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-1.0.txt -ac -o /workspaces/ctf-vscode-container/htb/machines/\$TARGET_HOSTNAME/ffuf_directories.txt"
+alias ffuf-directories="ffuf -u http://\$TARGET_HOSTNAME_HTB/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-medium.txt -ac -o /workspaces/ctf-vscode-container/htb/machines/\$TARGET_HOSTNAME/ffuf_directories.txt"

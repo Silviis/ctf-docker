@@ -2,32 +2,65 @@ FROM kalilinux/kali-rolling
 ENV USERNAME=kali
 ARG ZSH_THEME=htb
 ENV DEBIAN_FRONTEND=noninteractive
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN apt update
-RUN apt install -y \
-        kali-linux-headless kali-tools-crypto-stego kali-tools-fuzzing \
-        kali-tools-web kali-tools-passwords kali-tools-reverse-engineering \
-        kali-tools-exploitation kali-tools-post-exploitation
+# Separate big packages to use docker cache more efficiently
+RUN apt install -y --no-install-recommends \
+        seclists \
+        wordlists
+RUN gunzip -f /usr/share/wordlists/rockyou.txt.gz
 
-# Extra tools
-RUN apt install -y\
-        burpsuite
+RUN apt install -y --no-install-recommends \
+        curl \ 
+        dialog \
+        dnsutils \
+        file \
+        iproute2 \
+        iputils-ping \
+        nano \
+        netcat-openbsd \
+        openvpn \
+        psmisc \
+        sudo \
+        unzip \
+        wget \
+        zsh
 
-# System & python packages
-RUN apt install -y \
-        iputils-ping sudo dialog nano git zsh curl rlwrap \
-        python3-pip python3-requests python3-zbar python3-pillow\
-        python3-unicorn python3-opencv python3-venv jq
+RUN apt install -y --no-install-recommends \
+        burpsuite \
+        ffuf \
+        gdb \
+        ghidra \
+        git \
+        gobuster \
+        hashcat \
+        hydra \
+        john \
+        jq \
+        ldap-utils \
+        nmap \
+        python3-opencv \
+        python3-pillow \
+        python3-pip \
+        python3-requests \
+        python3-unicorn \
+        python3-venv \
+        python3-zbar \
+        rlwrap \
+        smbclient \
+        sqlmap \
+        strace \
+        tcpdump
 
-RUN gunzip /usr/share/wordlists/rockyou.txt.gz
 
-# Add new user as a sudoer.
+# Add new user as a sudoer. Replace UID/GID 1000 if your host uses different values.
 RUN useradd -m $USERNAME && \
         echo "$USERNAME:$USERNAME" | chpasswd && \
         usermod --shell /bin/bash $USERNAME && \
         usermod -aG sudo $USERNAME && \
         echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME && \
         chmod 0440 /etc/sudoers.d/$USERNAME && \
-        # Replace 1000 with your user/group id
         usermod  --uid 1000 $USERNAME && \
         groupmod --gid 1000 $USERNAME
 
